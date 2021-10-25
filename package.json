@@ -1,0 +1,36 @@
+{
+  "name": "homie-sdk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test:lint": "eslint lib tests --ext js",
+    "test": "jest --runInBand --forceExit",
+    "test:coverage": "npm run test -- --coverage"
+  },
+  "author": "2Smart",
+  "license": "ISC",
+  "dependencies": {
+    "@taoqf/react-native-mqtt": "^3.0.4",
+    "babel-eslint": "8.2.2",
+    "bluebird": "^3.7.2",
+    "create-hash": "^1.2.0",
+    "livr": "2.2.5",
+    "livr-extra-rules": "1.2.1",
+    "lodash": "^4.17.20",
+    "mqtt": "3.0.0",
+    "mqtt-packet": "6.2.1",
+    "nanoid": "^2.1.9"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-webbylab": "4.0.0",
+    "eslint-loader": "2.0.0",
+    "eslint-plugin-fetch": "0.0.1",
+    "eslint-plugin-import": "2.9.0",
+    "eslint-plugin-more": "0.3.1",
+    "eslint-plugin-no-require-lodash": "1.1.0",
+    "eslint-plugin-prefer-spread": "1.0.3",
+    "eslint-plugin-react": "7.7.0"
+  }
+}
