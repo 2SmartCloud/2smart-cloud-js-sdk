@@ -1,33 +1,41 @@
 # Homie SDK
 
-## Описание
+## Description
+SDK for managing devices and their states, it is based on extended protocol [homieiot](https://homieiot.github.io/specification/).
 
-Набор инструментов для управления устройств и их состоянием. В основе этого SDK лежит расширенный протокол [Homieio](https://homieiot.github.io/specification/).
+## Extension of the protocol
 
-## Расширение протокола
+1.  The device has a group of attributes `$options`, which in format repeats the `$properties` from the node. Used to store device settings, both editable and not. Example: `sweet-home/device/$options/some-option`.
+2.  The device has a group of attributes `$telemetry`, which in format repeats the `$properties` from the node. Used to store various telemetry and statistics. `$stats` is not used. Example: `sweet-home/device/$telemetry/some-telemetry`.
+3.  A node has a `$state` attribute, similar to a device. Example: `sweet-home/device/node/$state`.
+4.  The node has a group of attributes `$options`, similar to the device. Example: `sweet-home/device/node/$options/some-option`.
+5.  The node has a group of attributes `$telemetry`, similar to the device. Example: `sweet-home/device/node/$telemetry/some-telemetry`.
+6.  A mechanism for validating the set values has been added to the application:
+    *  On the received message, in case of incorrect values, the error body should be sent to a topic like `errors/sweet-home/device/node...` The error body should be in the JSON format of the string "{" code ": 'error_code'," message ": 'error message'}". (For example, if an incorrect value has come to the topic `sweet-home/device/node/sensor/set`, then the error should be sent to the topic `errors/sweet-home/device/node/sensor`)
+     *  Valid for any editable values (`$properties`,`$options`, `$telemetry`).
 
-1.  В устройстве есть группа атрибутов $options, которая по формату повторяет Properties из ноды. Используется для хранения настроек устройства, как редактируемых, так и нет. Пример: `_/home/device/$options/some_option_`.
-2. В устройстве есть группа атрибутов $telemetry, которая по формату повторяет Properties из ноды. Используется для хранения различной телеметрии и статистики. $stats не используется. Пример: `_/home/device/$telemetry/some_stat_`.
-3. У ноды есть атрибут $state, по аналогии с устройством. Пример: `_/home/device/node/$state_`.
-4. У ноды есть группа атрибутов $options, по аналогии с устройством. Пример: `_/home/device/node/$options`/some_option_.
-5. У ноды есть группа атрибутов $telemetry, по аналогии с устройством. Пример: `_/home/device/node/$telemetry`/some_stat_.
+7.  Device and node indicators are taken from the following attributes:
+     *  Status (state) - `$state`.
+     *  Signal strength - `$telemetry/signal`.
+     *  Battery charge level - `$telemetry/battery`.
 
-Индикаторы устройства и ноды берутся из таких атрибутов:
+Device attribute `$stats` from the original protocol is not supported.
 
-1. Статус (состояние) - `$state`.
-2. Сила сигнала - `$telemetry/signal`.
-3. Уровень заряда батареи - `$telemetry/battery`.
 
-Атрибут устройства `$stats`, из оригинального протокола, не поддерживается.
+### Required state for creating an entity in an application
 
-## Структура
+* For device: `$homie`, `$name`, `$localip`, `$mac`, `$fw/name`, `$fw/version`, `$implementation`, `$state`.
+* For node: `$name`, `$state` plus at least one property.
+* For properties: (`$properties`, `$options`, `$telemetry`): `$name`.
 
-1. [Broker](lib/Broker/README.md) - поддерживаемые транспортные протоколы.
-2. [Device](lib/Device/README.md) - инструмент для создания/управления устройства.
-3. [Node](lib/Node/README.md) - инструмент для создания/управления ноды.
-4. [Property](lib/Property/README.md) - инструмент для создания/управления свойства.
-5. [Sensor](lib/Sensor/README.md) - инструмент для создания/управления сенсора.
-6. [ETL](lib/etl/README.md) - набор правил для трансформации данных.
-7. [Homie](lib/homie/README.md) - набор инструментов для управления устройств и их состоянием.
-7. [Bridge](lib/Bridge/README.md) - набор инструментов для разработчиков бриджей.
-8. [Utils](lib/utils/README.md) - набор утилит.
+## Structure
+
+1. [Broker](lib/Broker/README.md) - supported transport protocols.
+2. [Device](lib/Device/README.md) - tool for device creation/control.
+3. [Node](lib/Node/README.md) - tool for node creation/control.
+4. [Property](lib/Property/README.md) - tool for property creation/control.
+5. [Sensor](lib/Sensor/README.md) - tool for sensor creation/control.
+6. [ETL](lib/etl/README.md) - set of rules for the data transformation.
+7. [Homie](lib/homie/README.md) - toolkit for managing devices and their states.
+8. [Bridge](lib/Bridge/README.md) - toolkit for bridge developers.
+9. [Utils](lib/utils/README.md) - set of utilities.

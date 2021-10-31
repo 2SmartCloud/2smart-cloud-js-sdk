@@ -1,7 +1,7 @@
 # Utils
 
 ## Debugger
-*Инструмент для логирования.*
+*Logging tool*
 - Debugger([event, logger])
 - Debugger.initEvents()
 - Debugger.log(message[, level])
@@ -16,83 +16,84 @@
 
 **Debugger([event, logger])**
 
-- event: `String`. Название события для логирования
-- logger: `Any`. Кастомный логгер
+Creates Debugger instance
+
+- event: `String`. Event name for logging
+- logger: `Any`. Custom logger
 
 ***
 
 **Debugger.initEvents()**
-*Метод для подписки на события логов.*
 
-Подписка производиться по аргументу `event`.
+Method for subscribing on logging events. Subscribing is made by "event" argument passed to the constructor.
 
 ***
 
 **Debugger.log(message[, level = 'info'])**
 
-Форматированный вывод сообщения в stdout
+Prints formatted message to stdout.
 
-- message: `Any`
-- level: `String`
+- message: `Any` a message to print
+- level: `String` a logging level
 
 ***
 
 **Debugger.info(address, message)**
 
-Триггер события для логирования `info` сообщения
+Emits event for logging `info` message
 
-- address: `String`. Название события
-- message: `Any`
+- address: `String` an event name
+- message: `Any` a message to log
 
 ***
 
 **Debugger.warning(address, message)**
 
-Триггер события для логирования `warning` сообщения
+Emits event for logging `warning` message
 
-- address: `String`. Название события
-- message: `Any`
+- address: `String` an event name
+- message: `Any` a message to log
 
 ***
 
 **Debugger.error(message)**
 
-Логирование ошибки. Этот метод игнорирует подписки на события и логирует любое сообщение
+Log the errors. This method ignores any subscriptions and log any message
 
-- message: `Any`
+- message: `Any` a message to log
 
 ***
 
 **Debugger.send(address, message, level)**
 
-Триггер события для логирования любого сообщения
+Emits event for logging any message
 
-- address: `String`. Название события
-- message: `Any`
-- level: `String`
+- address: `String` an event name
+- message: `Any` a message to log
+- level: `String` a logging level
 
 ***
 
 **Debugger.ignore(address)**
 
-Отписка от события логирования по названию
+Unsubscribes from event
 
-- address: `String`. Название события
+- address: `String` an event name to unsubscribe from
 
 ***
 
 **Debugger.isIgnored(address)**
 
-Проверка факта подписки на событие логирования по названию
+Check whether there is any subscription for provided event
 
-- address: `String`. Название события
+- address: `String` an event name
 
 Return: `boolean`
 
 ***
 
 
-### Пример использования с подпиской:
+### Example of usage with subscription:
 ```
 
 const Debugger = require('homie-sdk/lib/utils/debugger');
@@ -115,7 +116,7 @@ someFunc();
 // -> { "level": "error", "message": "{ code: "ERROR", message: "Function call" }" }
 ```
 
-### Пример использования без подписки:
+### Example of usage without subscription:
 ```
 
 const Debugger = require('homie-sdk/lib/utils/debugger');

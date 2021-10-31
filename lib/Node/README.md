@@ -1,35 +1,6 @@
-# Node [DEPRECATED]
+# Node
 
 ## API
-
-- Node(options)
-- Node.updateAttribute(attributes)
-- Node.validateMyStructure()
-- Node.setSettingAttribute(attribute, value)
-- Node.publishAttribute(attribute, value)
-- Node.publishSetting(attribute, value)
-- Node.onAttributePublish(cb)
-- Node.onAttributeSet(cb)
-- Node.serialize()
-- Node.addSensor(sensor)
-- Node.addTelemetry(telemetry)
-- Node.addOption(option)
-- Node.getId()
-- Node.getName()
-- Node.getSensors()
-- Node.getOptions()
-- Node.getTelemetry()
-- Node.getSensorById(id)
-- Node.getOptionById(id)
-- Node.getTelemetryById(id)
-- Node.getState()
-- Node.getDevice()
-- Node.getDeviceId()
-- Node.getType()
-- Node.setDevice(device)
-- Node.getTitle()
-
-***
 
 **Node(options)**
 
@@ -73,6 +44,12 @@ Inject node instance with homie environment
 - homie: [homie](../homie/README.md) instance. Required;
 - rootTopic: `String`. Root topic defined in `homie` environment. Required;
 - device: [Device](../Device/README.md) instance. Parent device instance. Default: `null`;
+
+***
+
+**Property.onDetach()**
+
+Remove homie instance and unsubscribe from events.
 
 ***
 
@@ -363,3 +340,54 @@ Set [Device](../Device/README.md) for node.
 Get node title
 
 Returns: `String`
+
+***
+
+**Node.getTopic()**
+
+Get node topic.
+
+Returns: `String`.
+
+***
+
+**Node.getRootTopic()**
+
+Get root topic.
+
+Returns: `String`.
+
+***
+
+**Node.isEmpty()**
+
+Check if node doesn't contain any valid instance of Property
+
+Returns: `Boolean`
+
+***
+
+**Node.delete()**
+
+Unsubscribe from homie events and clear all attributes from instance.
+
+***
+
+**Node.deleteHandlers()**
+
+Unsubscribe from homie events.
+
+***
+
+**Node.getTopics(all = false)**
+
+Get an object of all topics and values from attributes.
+`all = true` will return also a `setting topics`.
+
+Returns: `Object`
+
+***
+
+**Node.deleteRequest()**
+
+Send a request to delete node from system.

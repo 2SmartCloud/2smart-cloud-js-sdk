@@ -1,89 +1,116 @@
 # Broker
 
-## Описание
+## Description
 
-Реализация транспортных протоколов для работы с брокером.
+Transport protocol for MQTT broker
 
 ***
 
 **MQTTTransport(options)**
 
-Класс оборачивает клиентское соединение с брокером.
+Class wraps a client connection to an MQTT broker over an arbitrary transport method (TCP, TLS, WebSocket, ecc).
 
 - options:
-    - uri: **Required.** URI для подключения к брокеру;
-    - retained: флаг для `retain` режима. По умолчанию `true`
+    - uri: **Required.** mqtt broker URI;
+    - retain: specify global `retain` flag for all publish messages (can be overwritten)
+    - username: the username required by your broker, if any
+    - password: the password required by your broker, if any
+    - rootTopic: prefix for all topics to subscribe or publish
+    - will: a message that will sent by the broker automatically when the client disconnect badly. The format is:
+        `topic`: the topic to publish
+        `payload`: the message to publish
+        `qos`: the QoS
+        `retain`: the retain flag
+    - debug: custom logger, if needed
 
 ***
 
 **MQTTTransport.connect()**
 
-Подключается к брокеру, указанному в URI.
+Connect to broker by given URI
    
 ***
 
 **MQTTTransport.publish(topic, message, options, [callback])**
 
-Опубликовать сообщение в топике.
+Publish a message to a topic
 
-- topic: топик для публикации
-- message: сообщение для публикации
-- options: по умолчанию `{}`
-    - dup: отмечать как дублирующий флаг, `Boolean`, по умолчанию `false`
-    - properties: свойства MQTT 5.0, `Object`
-        - messageExpiryInterval: время жизни сообщения приложения в секундах `Number`;
-        - responseTopic: строка, которая используется в качестве имени топика для строки ответного сообщения, `String`;
-- callback: function (err), срабатывающая при завершении обработки QoS, или при следующем тике, если QoS 0. Ошибка возникает, если клиент отключается.
+- topic: is the topic to publish to, String
+- message: is the message to publish, Buffer or String
+- options: is the options to publish with, including:
+    `qos` QoS level, Number, default `0`
+    `retain` retain flag, `Boolean`, default `false`
+    `dup` mark as duplicate flag, `Boolean`, default `false`
+- callback: `function (err)`, fired when the QoS handling completes, or at the next tick if QoS 0. An error occurs if client is disconnecting.
 
 ***
 
 **MQTTTransport.message([callback])**
 
-Метод для обработки сообщений из брокера
-
-- callback: function (topic, message, packet), callback для обработки сообщения
-    - topic: топик `String`
-    - message: сообщение для публикации `Buffer`
-    - packet: принятый пакет `Object`
+- callback: `function (topic, message, packet)` handle message from broker
+    - topic: `String`
+    - message: `Buffer`
+    - packet: `Object`
 
 ***
 
-**MQTTTransport.subscribe(topic, [callback]**
+**MQTTTransport.subscribe(topic/topics array, [callback]**
 
-Подписаться на топик или топики
+Subscribe to a topic or topics
 
-- topic: топик или топики для подписки `String`/`Array`
-- callback - function (err, granted) ошибка подписки или ошибка, возникающая при отключении клиента:
-    - topic: топик, который вызвал ошибку
-    - QOS: это предоставленный уровень QOS
+- topic: topic or topics to subscribe `String`/`Array`
+- callback: `function (err, granted)` callback fired on suback where:
+    `err` a subscription error or an error that occurs when client is disconnecting
+    `granted` is an array of {topic, qos} where:
+        `topic` is a subscribed to topic
+        `qos` is the granted QoS level on it
+
 
 ***
 
-**MQTTTransport.unsubscribe(topic/topic array, [callback])**
+**MQTTTransport.unsubscribe(topic/topics array, [callback])**
 
-Отписаться от топика или топиков
+Unsubscribe from a topic or topics
 
-- topic: топик или топики для отписки `String`/`Array`
-- callback - function (err) ошибка отписки или ошибка, возникающая при отключении клиента
+- topic: topic or an array of topics to unsubscribe from `String`/`Array`
+- callback: `function (err)` fired on unsuback. An error occurs if client is disconnecting.
 
 ***
 
 **MQTTTransport.end([force], [cb])**
 
-Закрыть соединение с брокером
+Close the client, accepts the following options:
 
-- force: если `true`, мгновенно закрывает соединение с брокером `Boolean`
-- cb: будет вызван, когда соединение будет закрыто
+- force: passing it to true will close the client right away, without waiting for the in-flight messages to be acked. This parameter is optional.
+- cb: will be called when the client is closed. This parameter is optional.
 
 ***
 
 **MQTTTransport.reconnect()**
 
-Подключитесь снова, используя те же параметры, что и connect ()
+Connect again using the same options as connect()
+
+***
 
 **MQTTTransport.onConnect(cb)**
 
-- cb: будет вызван, при подключении к брокеру
+- cb: handle successful (re)connection.
 
+***
 
+**MQTTTransport.setWill(will)**
 
+Set will option before connection to broker. `Object`
+
+`topic`: the topic to publish
+`payload`: the message to publish
+`qos`: the QoS
+`retain`: the retain flag
+
+***
+
+**MQTTTransport.isConnected()**
+
+Check is connected to broker
+
+Returns: `Boolean`

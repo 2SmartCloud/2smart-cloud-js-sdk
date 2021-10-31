@@ -1,38 +1,5 @@
-# Property [DEPRECATED]
-
+# Property
 ## API
-
-- Property(options)
-- Property.updateAttribute(data)
-- Property.validateMyStructure()
-- Property.onAttach(homie, rootTopic, deviceId, nodeId)
-- Property.setAttribute(attribute, value)
-- Property.publishAttribute(attribute, value)
-- Property.publishError(error)
-- Property.onAttributePublish(cb)
-- Property.onAttributeSet(cb)
-- Property.serialize()
-- Property.addSensor(sensor)
-- Property.addTelemetry(telemetry)
-- Property.addOption(option)
-- Property.getId()
-- Property.getName()
-- Property.getState()
-- Property.getValue()
-- Property.getSettable()
-- Property.getRetained()
-- Property.getDataType()
-- Property.getUnit()
-- Property.getFormat()
-- Property.getDevice()
-- Property.getNode()
-- Property.getDeviceId()
-- Property.getNodeId()
-- Property.setValue(value)
-- Property.setDevice(device)
-- Property.setNode(node)
-
-***
 
 **Property(options)**
 
@@ -86,6 +53,12 @@ Inject property instance with homie environment
 - rootTopic: `String`. Root topic defined in `homie` environment. Required;
 - device: [Device](../Device/README.md) instance. Parent device instance. Default: `null`;
 - node: [Node](../Node/README.md) instance. Parent node instance. Default: `null`;
+
+***
+
+**Property.onDetach()**
+
+Remove homie instance and unsubscribe from events.
 
 ***
 
@@ -374,3 +347,42 @@ Set parent device
 Set parent node
 
 - node: `Object` [Node](../Node/README.md)
+
+***
+
+**Property.getTopic()**
+
+Get property topic.
+
+Returns: `String`.
+
+***
+
+**Property.getRootTopic()**
+
+Get root topic.
+
+Returns: `String`.
+
+***
+
+**Property.isEmpty()**
+
+Check if property is not valid in homie
+
+Returns: `Boolean`
+
+***
+
+**Property.deleteHandlers()**
+
+Unsubscribe from homie events.
+
+***
+
+**Property.getTopics(all = false)**
+
+Get an object of all topics and values from attributes.
+`all = true` will return also a `setting topics`.
+
+Returns: `Object`

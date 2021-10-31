@@ -50,6 +50,12 @@ Inject device instance with homie environment
 
 ***
 
+**Device.onDetach()**
+
+Remove homie instance and unsubscribe from events.
+
+***
+
 **Device.setSettingAttribute(attribute, value)**
 
 Set device setting attribute to broker. Returns - `Promise`.
@@ -149,52 +155,62 @@ Subscribe to heartbeat events
 
 ***
 
-**Device.respondToHeartbeat()**
+**Device.respondToHeartbeat({ value })**
 
-Send heartbeat event
+Send heartbeat message.
 
 ***
 
 **Device.deleteRequest()**
 
-Send a request to delete device from system
+Send a request to delete device from system.
 
 ***
 
 **Device.getTopic()**
 
-Get device topic
+Get device topic.
+
+Returns: `String`.
+
+***
+
+**Device.getRootTopic()**
+
+Get root topic.
+
+Returns: `String`.
 
 ***
 
 **Device.getMapByGroupId()**
 
-Get cached map by group id
+Get cached map by group id.
 
 ***
 
 **Device.deleteMapByGroupId()**
 
-Delete cached map by group id
+Delete cached map by group id.
 
 ***
 
 **Device.serialize()**
 
-Get serialized device data
+Get serialized device data.
 
 Returns: `Object`. Example -
 ```
 {
     'id'                : 'device-id',
-    'name'              : 'Yahoo Weather',
+    'name'              : 'Weather',
     'state'             : 'init',
     'implementation'    : 'dafs',
     'mac'               : 'ab:cd:ef:gh:ij',
     'localIp'           : '127.0.0.1',
     'firmwareName'      : 'test device',
     'firmwareVersion'   : '1.2-rc',
-    'rootTopic'         : 'homie/device-id',
+    'rootTopic'         : 'sweet-home/device-id',
     'telemetry'         : [],
     'options'           : [],
     'nodes'             : [
@@ -388,3 +404,32 @@ Throws exception if instance not found. Error example:
 Get device title
 
 Returns: `String`
+
+***
+
+**Device.isEmpty()**
+
+Check if device doesn't contain any valid instance of Node or Property
+
+Returns: `Boolean`
+
+***
+
+**Device.deleteHandlers()**
+
+Unsubscribe from homie events.
+
+***
+
+**Device.delete()**
+
+Unsubscribe from homie events and clear all attributes from instance.
+
+***
+
+**Device.getTopics(all = false)**
+
+Get an object of all topics and values from attributes.
+`all = true` will return also a `setting topics`.
+
+Returns: `Object`
