@@ -9,7 +9,7 @@
 </br>
 
 ## Examples
-[HERE](examples/README.md)
+Examples described [HERE](examples/README.md)
 
 </br>
 
