@@ -14,7 +14,7 @@ Examples described [HERE](examples/README.md)
 </br>
 
 # BaseBridge
-*Клас который является контейнером для всего что нужно бриджу.*
+*Base Bridge class to combine both device and homie protocols and setup two-way control from mqtt broker and device's transport protocols.*
 ### `new BaseBridge(config)`
 * `config`
     * `homie` : instance of [Homie](../homie/Homie/README.md)
